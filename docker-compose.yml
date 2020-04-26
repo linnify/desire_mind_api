@@ -1,0 +1,28 @@
+version: "3"
+services:
+  api:
+    container_name: "desire_mind_api"
+    build: ./src
+    stdin_open: true
+    tty: true
+    env_file:
+      - .api.env
+    volumes:
+      - ./src:/app
+    depends_on:
+      - db
+    ports:
+      - "8000:8000"
+
+  db:
+    container_name: "db"
+    image: postgres
+    ports:
+      - "5432:5432"
+    env_file:
+      - .db.env
+    volumes:
+      - dbdata:/var/lib/postgresql/data
+
+volumes:
+  dbdata:
