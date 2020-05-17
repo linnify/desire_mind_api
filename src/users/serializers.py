@@ -9,7 +9,7 @@ class SwiftUserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = SwiftUser
-        fields = ("id", "email", "first_name", "last_name", "profile_image", "password")
+        fields = ("id", "username", "email", "first_name", "last_name", "profile_image", "password")
         extra_kwargs = {
             "password": {"write_only": True}
         }
