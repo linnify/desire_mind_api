@@ -24,5 +24,25 @@ services:
     volumes:
       - dbdata:/var/lib/postgresql/data
 
+  filestorage:
+    container_name: "minio"
+    image: minio/minio
+    volumes:
+      - filestoragedata:/data
+    env_file:
+      - .filestorage.env
+    entrypoint: >
+      /usr/bin/docker-entrypoint.sh minio server /data
+
+  filestorage-reverseproxy:
+    container_name: "fs_reverseproxy"
+    build:
+      context: ./reverseproxy
+    ports:
+      - "8667:8667"
+    depends_on:
+      - filestorage
+
 volumes:
   dbdata:
+  filestoragedata:
