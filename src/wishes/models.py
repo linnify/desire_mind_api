@@ -14,4 +14,4 @@ class Wish(models.Model):
     user = models.ForeignKey(SwiftUser, null=False, on_delete=models.CASCADE)
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-    image = models.FileField(upload_to=wishes_image_dir, max_length=255, null=True)
+    image = models.FileField(upload_to=wishes_image_dir, max_length=255, null=True, blank=True)

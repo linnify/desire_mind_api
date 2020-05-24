@@ -7,4 +7,4 @@ def user_profile_picture_dir(instance, filename):
 
 
 class SwiftUser(AbstractUser):
-    profile_image = models.FileField(upload_to=user_profile_picture_dir, max_length=255, null=True)
+    profile_image = models.FileField(upload_to=user_profile_picture_dir, max_length=255, null=True, blank=True)

@@ -1,5 +1,5 @@
 from rest_framework import status
-from rest_framework.decorators import api_view, permission_classes
+from rest_framework.decorators import api_view, permission_classes, action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import viewsets
@@ -28,3 +28,18 @@ class SwiftUserModelViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
     serializer_class = SwiftUserSerializer
     permission_classes = ()
     queryset = SwiftUser.objects.all()
+
+    @action(methods=["POST"], detail=True, url_path="/profile-picture")
+    def upload_profile_picture(self, request, pk):
+        try:
+            user: SwiftUser = self.get_object()
+        except SwiftUser.DoesNotExist:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+
+        file = request.FILES["file"]
+
+        user.profile_image = file
+
+        user.save()
+
+        return Response(status=status.HTTP_200_OK)
